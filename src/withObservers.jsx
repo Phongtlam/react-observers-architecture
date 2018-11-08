@@ -36,7 +36,7 @@ const withObservers = (
       };
       this.ObserversInstances = this._createObservers();
       this._resizeObserverHandler = this._resizeObserverHandler.bind(this);
-      this._createLazyloadObserver = this._createLazyloadObserver.bind(this);
+      this._intersectionObserverHandler = this._intersectionObserverHandler.bind(this);
       this._createImageLazyloadObserver = this._createImageLazyloadObserver.bind(this);
     }
 
@@ -106,7 +106,7 @@ const withObservers = (
       distanceToLoadFromViewport = "50px",
       advancedConfigs
     ) {
-      this._createLazyloadObserver(
+      this._intersectionObserverHandler(
         (entry, observer) => {
           if (entry.isIntersecting) {
             // start fetching the images
@@ -122,7 +122,7 @@ const withObservers = (
       );
     }
 
-    _createLazyloadObserver(
+    _intersectionObserverHandler(
       callback,
       componentName,
       observedElements,
@@ -213,7 +213,7 @@ const withObservers = (
             hashApis[type] = {
               instance: IntersectionObserver,
               lazyloadImg: this._createImageLazyloadObserver,
-              lazyload: this._createLazyloadObserver
+              handler: this._intersectionObserverHandler
             };
             break;
 
